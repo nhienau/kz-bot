@@ -7,6 +7,7 @@ module.exports = function (str) {
     "meme",
     "shitpost",
     "video",
+    "morningmsg",
   ];
   const result = validChannelNames.filter((name) => str.includes(name));
   return result.length === 1;
