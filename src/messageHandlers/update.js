@@ -18,13 +18,18 @@ module.exports = async function (message) {
     return;
   }
 
-  const commandParams = messageContent.trim().toLowerCase().split(" ");
-  if (commandParams.length === 1) {
+  const commandParams = messageContent
+    .trim()
+    .toLowerCase()
+    .split(" ")
+    .slice(1)
+    .filter((word) => word !== "");
+  if (commandParams.length === 0) {
     console.log('[update] Missing option: "text"/"attachment"');
     return;
   }
 
-  const option = commandParams[1].trim().toLowerCase();
+  const option = commandParams[0].trim().toLowerCase();
   if (option !== "text" && option !== "attachment") {
     console.log(
       '[update] Invalid option, should be either "text"/ "attachment"'
