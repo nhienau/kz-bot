@@ -21,13 +21,13 @@ module.exports = async function (message) {
     return;
   }
 
-  const commandParams = messageContent
+  const args = messageContent
     .trim()
     .toLowerCase()
     .split(" ")
     .slice(1)
     .filter((word) => word !== "");
-  if (commandParams.length === 0) {
+  if (args.length === 0) {
     console.log(
       `[${formatTimestamp(
         new Date()
@@ -36,7 +36,7 @@ module.exports = async function (message) {
     return;
   }
 
-  const option = commandParams[0].trim().toLowerCase();
+  const option = args[0].trim().toLowerCase();
   if (option !== "text" && option !== "attachment") {
     console.log(
       `[${formatTimestamp(
