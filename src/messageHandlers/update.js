@@ -1,10 +1,11 @@
 require("dotenv").config();
 const fs = require("node:fs");
+const formatTimestamp = require("../helpers/formatTimestamp.js");
 const isValidChannelName = require("../helpers/isValidChannelName.js");
 
 module.exports = async function (message) {
   if (message.author.id !== process.env.OWNER_ID) {
-    console.log("[update] No permission");
+    console.log(`[${formatTimestamp(new Date())}] !update: No permission`);
     return;
   }
 
@@ -13,7 +14,9 @@ module.exports = async function (message) {
 
   if (!isValidChannelName(channel.name.toLowerCase())) {
     console.log(
-      `[update] Command cannot be used on channel "${channel.name}".`
+      `[${formatTimestamp(
+        new Date()
+      )}] !update: Command cannot be used on channel "${channel.name}".`
     );
     return;
   }
@@ -25,14 +28,20 @@ module.exports = async function (message) {
     .slice(1)
     .filter((word) => word !== "");
   if (commandParams.length === 0) {
-    console.log('[update] Missing option: "text"/"attachment"');
+    console.log(
+      `[${formatTimestamp(
+        new Date()
+      )}] !update: Missing option: "text"/"attachment"`
+    );
     return;
   }
 
   const option = commandParams[0].trim().toLowerCase();
   if (option !== "text" && option !== "attachment") {
     console.log(
-      '[update] Invalid option, should be either "text"/ "attachment"'
+      `[${formatTimestamp(
+        new Date()
+      )}] !update: Invalid option, should be either "text"/"attachment"`
     );
     return;
   }
@@ -55,7 +64,7 @@ module.exports = async function (message) {
             Array.from(map.values()).map((obj) => obj.attachment)
           );
   if (contents.length === 0) {
-    console.log("[update] No contents found.");
+    console.log(`[${formatTimestamp(new Date())}] !update: No contents found.`);
     return;
   }
   const fileName = channel.name.toLowerCase().replace(/ /g, "");
@@ -63,9 +72,11 @@ module.exports = async function (message) {
   try {
     fs.writeFileSync(filePath, JSON.stringify(contents));
     console.log(
-      `[update] Successfully written ${contents.length} content${
-        contents.length == 1 ? "" : "s"
-      } in "${channel.name}" to ${filePath}`
+      `[${formatTimestamp(new Date())}] !update: Successfully written ${
+        contents.length
+      } content${contents.length == 1 ? "" : "s"} in "${
+        channel.name
+      }" to ${filePath}`
     );
   } catch (e) {
     console.error(e);
