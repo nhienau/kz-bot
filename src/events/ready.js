@@ -13,10 +13,11 @@ module.exports = {
     });
     console.log(`${client.user.tag} is online.`);
 
-    client.scheduledMessage = new cron.CronJob(
-      "0 0 6 * * *",
-      sendDailyMessage.bind(null, client, process.env.MAIN_CHANNEL_ID)
-    );
-    client.scheduledMessage.start();
+    client.scheduledMessage = cron.CronJob.from({
+      cronTime: "0 0 6 * * *",
+      onTick: sendDailyMessage.bind(null, client, process.env.MAIN_CHANNEL_ID),
+      start: true,
+      timeZone: "Asia/Bangkok",
+    });
   },
 };
