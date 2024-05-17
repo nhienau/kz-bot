@@ -11,10 +11,7 @@ module.exports = {
     const { client } = message;
     const handler = client.messageHandlers.get(commandName);
 
-    if (!handler) {
-      console.error(`No command matching "${commandName}" was found.`);
-      return;
-    }
+    if (!handler) return;
 
     try {
       await handler(message);

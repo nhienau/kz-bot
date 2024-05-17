@@ -1,6 +1,7 @@
 require("dotenv").config();
 const { Events, ActivityType } = require("discord.js");
 const cron = require("cron");
+const formatTimestamp = require("../helpers/formatTimestamp.js");
 const sendDailyMessage = require("../helpers/sendDailyMessage.js");
 
 module.exports = {
@@ -11,7 +12,9 @@ module.exports = {
       activities: [{ name: "/help", type: ActivityType.Playing }],
       status: "online",
     });
-    console.log(`${client.user.tag} is online.`);
+    console.log(
+      `[${formatTimestamp(new Date())}] ${client.user.tag} is online.`
+    );
 
     client.scheduledMessage = cron.CronJob.from({
       cronTime: "0 0 6 * * *",

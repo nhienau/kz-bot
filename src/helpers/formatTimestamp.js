@@ -1,4 +1,4 @@
-module.exports = function () {
+module.exports = function (date) {
   return new Intl.DateTimeFormat("en-US", {
     timeZone: "Asia/Bangkok",
     year: "numeric",
@@ -7,6 +7,6 @@ module.exports = function () {
     hour: "2-digit",
     minute: "2-digit",
     second: "numeric",
-    hourCycle: "h24",
-  }).format(new Date());
+    hourCycle: "h23",
+  }).format(date);
 };
