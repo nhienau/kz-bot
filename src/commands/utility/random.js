@@ -1,4 +1,5 @@
 const { SlashCommandBuilder } = require("discord.js");
+const random = require("../../helpers/random.js");
 
 module.exports = {
   cooldown: 5,
@@ -20,8 +21,6 @@ module.exports = {
       return;
     }
 
-    await interaction.reply(
-      Math.floor(Math.random() * (max - min) + 1) + min + ""
-    );
+    await interaction.reply(random(min, max));
   },
 };
