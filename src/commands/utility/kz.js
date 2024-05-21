@@ -1,5 +1,6 @@
 const { SlashCommandBuilder } = require("discord.js");
 const getContentByTopic = require("../../helpers/getContentByTopic.js");
+const random = require("../../helpers/random.js");
 
 module.exports = {
   cooldown: 5,
@@ -12,7 +13,7 @@ module.exports = {
       return;
     }
 
-    const randomIndex = Math.floor(Math.random() * (attachmentUrls.length - 1));
+    const randomIndex = random(0, attachmentUrls.length - 1);
     await interaction.reply(attachmentUrls[randomIndex]);
   },
 };
