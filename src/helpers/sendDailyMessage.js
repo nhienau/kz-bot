@@ -1,9 +1,10 @@
 const getContentByTopic = require("./getContentByTopic.js");
+const random = require("./random.js");
 
 module.exports = function (client, channelId) {
   const channel = client.channels.cache.get(channelId);
   const attachmentUrls = getContentByTopic("morningmsg");
-  const randomIndex = Math.floor(Math.random() * (attachmentUrls.length - 1));
+  const randomIndex = random(0, attachmentUrls.length - 1);
 
   channel.send(
     attachmentUrls.length === 0
