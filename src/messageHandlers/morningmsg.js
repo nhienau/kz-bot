@@ -30,7 +30,7 @@ module.exports = function (message) {
       },
       {
         name: "Attachment",
-        value: attachment.length > 0 ? "Found" : "Not found",
+        value: attachment ? "Found" : "Not found",
       }
     );
     channel.send({ embeds: [embed] });
