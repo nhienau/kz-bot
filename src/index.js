@@ -2,6 +2,7 @@ require("dotenv").config();
 const { Client, Collection, GatewayIntentBits } = require("discord.js");
 const fs = require("node:fs");
 const path = require("node:path");
+const getContentByTopic = require("./helpers/getContentByTopic");
 
 const client = new Client({
   intents: [
@@ -62,5 +63,7 @@ for (const file of messageHandlersFiles) {
   const handler = require(filePath);
   client.messageHandlers.set(commandName, handler);
 }
+
+client.allowLargeFileUpload = getContentByTopic("largeFileConfig") || false;
 
 client.login(process.env.TOKEN);
