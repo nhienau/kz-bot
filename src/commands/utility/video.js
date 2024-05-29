@@ -1,4 +1,5 @@
-const { AttachmentBuilder, SlashCommandBuilder } = require("discord.js");
+const { SlashCommandBuilder } = require("discord.js");
+const generateReply = require("../../helpers/generateReply.js");
 const getContentByTopic = require("../../helpers/getContentByTopic.js");
 const random = require("../../helpers/random.js");
 
@@ -6,18 +7,21 @@ module.exports = {
   cooldown: 5,
   data: new SlashCommandBuilder().setName("video").setDescription("Video"),
   async execute(interaction) {
-    await interaction.deferReply();
-    const attachmentUrls = getContentByTopic("video");
-
-    if (attachmentUrls.length === 0) {
-      await interaction.editReply("Chưa có dữ liệu.");
+    const contents = getContentByTopic("video");
+    if (!contents || contents.length === 0) {
+      await interaction.reply("Chưa có dữ liệu.");
       return;
     }
 
-    const randomIndex = random(0, attachmentUrls.length - 1);
-    const attachment = new AttachmentBuilder(attachmentUrls[randomIndex]);
+    let randomIndex = random(0, contents.length - 1);
+    let content = contents[randomIndex];
+    if (!interaction.client.allowLargeFileUpload) {
+      while (content.attachment?.size > 25 * 1000 * 1000) {
+        randomIndex = random(0, contents.length - 1);
+        content = contents[randomIndex];
+      }
+    }
 
-    await interaction.channel.send({ files: [attachment] });
-    await interaction.editReply(`<@${interaction.user.id}>`);
+    await generateReply(interaction, content);
   },
 };

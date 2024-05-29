@@ -3,6 +3,7 @@ const { Events, ActivityType } = require("discord.js");
 const cron = require("cron");
 const formatTimestamp = require("../helpers/formatTimestamp.js");
 const sendDailyMessage = require("../helpers/sendDailyMessage.js");
+const updateResources = require("../helpers/updateResources.js");
 
 module.exports = {
   name: Events.ClientReady,
@@ -19,6 +20,13 @@ module.exports = {
     client.scheduledMessage = cron.CronJob.from({
       cronTime: "0 0 6 * * *",
       onTick: sendDailyMessage.bind(null, client, process.env.MAIN_CHANNEL_ID),
+      start: true,
+      timeZone: "Asia/Bangkok",
+    });
+
+    client.updateResources = cron.CronJob.from({
+      cronTime: "0 30 7 * * *",
+      onTick: updateResources.bind(null, client),
       start: true,
       timeZone: "Asia/Bangkok",
     });

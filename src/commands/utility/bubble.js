@@ -1,4 +1,5 @@
-const { EmbedBuilder, SlashCommandBuilder } = require("discord.js");
+const { SlashCommandBuilder } = require("discord.js");
+const generateReply = require("../../helpers/generateReply.js");
 const getContentByTopic = require("../../helpers/getContentByTopic.js");
 const random = require("../../helpers/random.js");
 
@@ -11,15 +12,13 @@ module.exports = {
       option.setName("message").setDescription("Message (optional)")
     ),
   async execute(interaction) {
-    const imgUrls = getContentByTopic("bubble");
+    const contents = getContentByTopic("bubble");
     const optionalMessage = interaction.options.getString("message");
 
-    if (imgUrls.length === 0) {
+    if (!contents || contents.length === 0) {
       await interaction.reply("Chưa có dữ liệu.");
       return;
     }
-
-    const randomIndex = random(0, imgUrls.length - 1);
 
     let messageContent;
     if (optionalMessage) {
@@ -29,15 +28,23 @@ module.exports = {
       const message = messages.find(
         (message) => !message.author.bot && message.content !== ""
       );
-      if (!message) {
-        await interaction.reply(imgUrls[randomIndex]);
-        return;
-      }
       messageContent = message.content;
     }
-    const embed = new EmbedBuilder()
-      .setDescription(messageContent)
-      .setImage(imgUrls[randomIndex]);
-    await interaction.reply({ embeds: [embed] });
+
+    let randomIndex;
+    let content;
+    do {
+      randomIndex = random(0, contents.length - 1);
+      content = contents[randomIndex];
+    } while (!content.attachment);
+
+    if (!interaction.client.allowLargeFileUpload) {
+      while (content.attachment?.size > 25 * 1000 * 1000) {
+        randomIndex = random(0, contents.length - 1);
+        content = contents[randomIndex];
+      }
+    }
+
+    await generateReply(interaction, content, messageContent);
   },
 };
