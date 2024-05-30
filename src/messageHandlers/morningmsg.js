@@ -40,7 +40,9 @@ module.exports = function (message) {
       channel.send("Invalid option, should be either `on`/`off`");
       return;
     }
-    client.scheduledMessage.running = state[value];
+    state[value]
+      ? client.scheduledMessage.start()
+      : client.scheduledMessage.stop();
     channel.send(
       `The morning message has been turned ${Object.keys(state).find(
         (s) => state[s] === client.scheduledMessage.running
