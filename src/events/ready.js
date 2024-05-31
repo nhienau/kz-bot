@@ -25,7 +25,7 @@ module.exports = {
     });
 
     client.updateResources = cron.CronJob.from({
-      cronTime: "0 30 7 * * *",
+      cronTime: "0 30 7,19 * * *",
       onTick: updateResources.bind(null, client),
       start: true,
       timeZone: "Asia/Bangkok",
