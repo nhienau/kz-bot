@@ -4,7 +4,7 @@ const getContentByTopic = require("../../helpers/getContentByTopic.js");
 const random = require("../../helpers/random.js");
 
 module.exports = {
-  cooldown: 5,
+  cooldown: 15,
   data: new SlashCommandBuilder().setName("video").setDescription("Video"),
   async execute(interaction) {
     const contents = getContentByTopic("video");
