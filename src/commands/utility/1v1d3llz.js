@@ -4,7 +4,7 @@ const getContentByTopic = require("../../helpers/getContentByTopic.js");
 const random = require("../../helpers/random.js");
 
 module.exports = {
-  cooldown: 15,
+  cooldown: 10,
   data: new SlashCommandBuilder()
     .setName("1v1d3llz")
     .setDescription("Hồng Huy Hoàng"),
