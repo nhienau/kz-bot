@@ -16,35 +16,34 @@ module.exports = {
     }
 
     const { cooldowns } = interaction.client;
-
-    if (!cooldowns.has(command.data.name)) {
-      cooldowns.set(command.data.name, new Collection());
-    }
+    const userId = interaction.user.id;
 
     const now = Date.now();
-    const timestamps = cooldowns.get(command.data.name);
     const defaultCooldownDuration = 5;
     const cooldownAmount =
       (command.cooldown ?? defaultCooldownDuration) * 1_000;
 
-    if (timestamps.has(interaction.user.id)) {
-      const expirationTime =
-        timestamps.get(interaction.user.id) + cooldownAmount;
+    if (cooldowns.has(userId)) {
+      const { timestamp, cooldownDuration } = cooldowns.get(userId);
+      const expirationTime = timestamp + cooldownDuration;
       if (now < expirationTime) {
         const expiredTimestamp = Math.round(expirationTime / 1_000);
         const secondsRemaining = Math.round((expirationTime - now) / 1_000);
         await interaction.reply({
-          content: `Please wait, you are on a cooldown for \`${command.data.name}\`. You can use it again <t:${expiredTimestamp}:R>.`,
+          content: `Slow down and try the command again <t:${expiredTimestamp}:R>.`,
           ephemeral: true,
         });
         await wait((secondsRemaining - 1) * 1000);
         await interaction.deleteReply();
         return;
       }
+    } else {
+      cooldowns.set(userId, {
+        timestamp: now,
+        cooldownDuration: cooldownAmount,
+      });
+      setTimeout(() => cooldowns.delete(userId), cooldownAmount);
     }
-
-    timestamps.set(interaction.user.id, now);
-    setTimeout(() => timestamps.delete(interaction.user.id), cooldownAmount);
 
     try {
       await command.execute(interaction);
