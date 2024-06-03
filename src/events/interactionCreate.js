@@ -20,8 +20,10 @@ module.exports = {
 
     const now = Date.now();
     const defaultCooldownDuration = 5;
+    const extraCooldownById = userId === "910535761152065617" ? 5 : 0;
     const cooldownAmount =
-      (command.cooldown ?? defaultCooldownDuration) * 1_000;
+      ((command.cooldown ?? defaultCooldownDuration) + extraCooldownById) *
+      1_000;
 
     if (cooldowns.has(userId)) {
       const { timestamp, cooldownDuration } = cooldowns.get(userId);
