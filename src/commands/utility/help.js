@@ -14,6 +14,7 @@ module.exports = {
       "`/kz` - Ảnh anh em Kz\n" +
       "`/meme` - Chat, comment, hình linh tinh\n" +
       "`/pick` - Chọn 1 lựa chọn ngẫu nhiên\n" +
+      "`/raisehand` - Dùng khi có ai cần giơ tay phát biểu\n" +
       "`/random` - Chọn 1 số ngẫu nhiên trong khoảng chỉ định\n" +
       "`/shitpost` - Shitpost, văn mẫu\n" +
       "`/video` - Video\n" +
