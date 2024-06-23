@@ -13,6 +13,15 @@ module.exports = {
     ),
   async execute(interaction) {
     const target = interaction.options.getUser("user");
+
+    if (target?.bot) {
+      await interaction.reply({
+        content: "Bạn không thể chỉ định bot giơ tay phát biểu.",
+        ephemeral: true,
+      });
+      return;
+    }
+
     const targetId = target?.id ?? process.env.DIEP_ID;
 
     const contents = getContentByTopic("raisehand");
@@ -37,6 +46,11 @@ module.exports = {
       "main anime",
       "trẩu",
       "bé gái",
+      "tổng tài",
+      "ông tướng",
+      "óc",
+      "hầu gái",
+      "đóm con",
     ];
     let randomPronounIndex = random(0, pronouns.length - 1);
 
