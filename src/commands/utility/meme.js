@@ -5,7 +5,7 @@ const random = require("../../helpers/random.js");
 
 module.exports = {
   cooldown: 10,
-  data: new SlashCommandBuilder().setName("meme").setDescription("meme"),
+  data: new SlashCommandBuilder().setName("meme").setDescription("Meme"),
   async execute(interaction) {
     const contents = getContentByTopic("meme");
     if (!contents || contents.length === 0) {
