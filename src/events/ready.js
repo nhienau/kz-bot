@@ -1,4 +1,3 @@
-require("dotenv").config();
 const { Events, ActivityType } = require("discord.js");
 const cron = require("cron");
 const formatTimestamp = require("../helpers/formatTimestamp.js");
