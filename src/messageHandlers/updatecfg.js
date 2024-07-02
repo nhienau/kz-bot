@@ -1,13 +1,7 @@
-require("dotenv").config();
 const fs = require("node:fs");
 const formatTimestamp = require("../helpers/formatTimestamp.js");
 
 module.exports = async function (message) {
-  if (message.author.id !== process.env.OWNER_ID) {
-    console.log(`[${formatTimestamp(new Date())}] !updatecfg: No permission`);
-    return;
-  }
-
   const { client, content: messageContent } = message;
 
   const args = messageContent

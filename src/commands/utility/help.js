@@ -1,4 +1,3 @@
-require("dotenv").config();
 const { EmbedBuilder, SlashCommandBuilder } = require("discord.js");
 const listCommands = require("../../helpers/listCommands.js");
 

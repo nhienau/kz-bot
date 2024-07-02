@@ -1,14 +1,9 @@
-require("dotenv").config();
 const { EmbedBuilder } = require("discord.js");
 const getContentByTopic = require("../helpers/getContentByTopic.js");
 
 module.exports = function (message) {
   const { channelId, client, content: messageContent } = message;
   const channel = client.channels.cache.get(channelId);
-  if (message.author.id !== process.env.OWNER_ID) {
-    channel.send("No permission.");
-    return;
-  }
 
   const args = messageContent
     .trim()
@@ -31,6 +26,10 @@ module.exports = function (message) {
       {
         name: "Attachment",
         value: attachment ? "Found" : "Not found",
+      },
+      {
+        name: "Channel",
+        value: `<#${process.env.MAIN_CHANNEL_ID}>`,
       }
     );
     channel.send({ embeds: [embed] });
