@@ -20,6 +20,10 @@ module.exports = [
     description: "Chat, comment, hình linh tinh",
   },
   {
+    name: "music",
+    description: "Gợi ý 1 bài nhạc bất kỳ",
+  },
+  {
     name: "pick",
     description: "Chọn 1 lựa chọn ngẫu nhiên",
   },
