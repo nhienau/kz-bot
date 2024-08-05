@@ -8,6 +8,10 @@ module.exports = [
     description: "Ảnh của chủ server",
   },
   {
+    name: "bhop",
+    description: "Bhop show, BOTW, ROTW, WR, handshow etc.",
+  },
+  {
     name: "bubble",
     description: "Bong bóng",
   },
