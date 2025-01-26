@@ -1,4 +1,4 @@
-const { SlashCommandBuilder } = require("discord.js");
+const { SlashCommandBuilder, MessageFlags } = require("discord.js");
 const random = require("../../helpers/random.js");
 
 module.exports = {
@@ -9,13 +9,20 @@ module.exports = {
     .addStringOption((option) =>
       option
         .setName("choices")
-        .setDescription('Choices, separated by comma (",")')
+        .setDescription('Các lựa chọn, ngăn cách bằng dấu phẩy (",")')
         .setMaxLength(200)
         .setRequired(true)
     ),
   async execute(interaction) {
     const message = interaction.options.getString("choices");
-    const choices = message.split(",");
+    const choices = message.split(",").filter((c) => c.trim() !== "");
+    if (choices.length === 0) {
+      await interaction.reply({
+        content: "Các lựa chọn không hợp lệ",
+        flags: MessageFlags.Ephemeral,
+      });
+      return;
+    }
     const randomIndex = random(0, choices.length - 1);
     await interaction.reply(choices[randomIndex].trim());
   },
