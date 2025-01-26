@@ -16,6 +16,10 @@ module.exports = [
     description: "Bong bóng",
   },
   {
+    name: "cutify",
+    description: "Giúp đoạn tin nhắn trở nên dễ thương hơn",
+  },
+  {
     name: "kz",
     description: "Ảnh anh em Kz",
   },
@@ -42,6 +46,11 @@ module.exports = [
   {
     name: "shitpost",
     description: "Shitpost, văn mẫu Kz",
+  },
+  {
+    name: "top5",
+    description:
+      "Đưa ra một bảng xếp hạng ngẫu nhiên (không nhất thiết là top 5)",
   },
   {
     name: "video",
