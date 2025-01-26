@@ -21,6 +21,6 @@ module.exports = {
       return;
     }
 
-    await interaction.reply(random(min, max));
+    await interaction.reply(`${random(min, max)}`);
   },
 };
