@@ -50,7 +50,6 @@ module.exports = {
       "ông tướng",
       "óc",
       "hầu gái",
-      "đóm con",
     ];
     let randomPronounIndex = random(0, pronouns.length - 1);
 
