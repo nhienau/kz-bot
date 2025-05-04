@@ -4,7 +4,7 @@ const random = require("../../helpers/random.js");
 const generateReply = require("../../helpers/generateReply.js");
 
 module.exports = {
-  cooldown: 5,
+  cooldown: 10,
   data: new SlashCommandBuilder()
     .setName("battle")
     .setDescription("Battle")
