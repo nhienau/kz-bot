@@ -3,7 +3,11 @@ const { AttachmentBuilder, EmbedBuilder } = require("discord.js");
 module.exports = async function (interaction, content, overrideMessage) {
   const { content: message, attachment } = content;
   if (!attachment) {
-    await interaction.reply(message);
+    const response = await interaction.reply({
+      content: message,
+      fetchReply: true,
+    });
+    return response;
   } else {
     const textContent = overrideMessage ?? (message === "" ? null : message);
 
@@ -12,15 +16,27 @@ module.exports = async function (interaction, content, overrideMessage) {
         const embed = new EmbedBuilder()
           .setDescription(textContent)
           .setImage(attachment.url);
-        await interaction.reply({ embeds: [embed] });
+        const response = await interaction.reply({
+          embeds: [embed],
+          fetchReply: true,
+        });
+        return response;
       } else {
-        await interaction.reply(attachment.url);
+        const response = await interaction.reply({
+          content: attachment.url,
+          fetchReply: true,
+        });
+        return response;
       }
     } else if (attachment.contentType.startsWith("video")) {
       const video = new AttachmentBuilder(attachment.url);
       await interaction.deferReply();
-      await interaction.channel.send({ files: [video] });
-      await interaction.editReply(textContent || `<@${interaction.user.id}>`);
+      const response = await interaction.channel.send({
+        content: textContent || `<@${interaction.user.id}>`,
+        files: [video],
+      });
+      await interaction.deleteReply();
+      return response;
     }
   }
 };
